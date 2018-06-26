@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pywal-web</title>
+    <style>
+        .box {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    {% for i, color in colors["special"].items() %}
+        <div class="box" style="background:{{color}}"></div>
+        <span>{{i}} - {{color}}</span>
+    {% end %}
+
+    {% for i, color in colors["colors"].items() %}
+        <div class="box" style="background:{{color}}"></div>
+        <span>{{i}} - {{color}}</span>
+    {% end %}
+    <textarea> {{out}} </textarea>
+    <button value="Download" id="btn1">Download</button>
+    <script>
+        var saveData = (function () {
+            var a = document.createElement("a");
+            document.body.appendChild(a);
+            a.style = "display: none";
+            return function (fileName) {
+                var out = `{{out}}`,
+                    blob = new Blob([out], {type: "octet/stream"}),
+                    url = window.URL.createObjectURL(blob);
+                a.href = url;
+                a.download = fileName;
+                a.click();
+                window.URL.revokeObjectURL(url);
+            };
+        }());
+        document.getElementById("btn1").addEventListener("click", function(){
+            saveData('{{out_name}}')
+        });
+    </script>
+</body>
+
+</html>
