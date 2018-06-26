@@ -14,16 +14,18 @@ class MainHandler(tornado.web.RequestHandler):
 class UploadHandler(tornado.web.RequestHandler):
     def post(self):
         file1 = self.request.files.get("file1")[0]
-        output_file = tempfile.NamedTemporaryFile("wb")
-        output_file.write(file1['body'])
+        infile = tempfile.NamedTemporaryFile("w+b")
+        infile.write(file1['body'])
 
-        path = pywal.image.get(output_file.name)
+        path = pywal.image.get(infile.name)
         colors = pywal.colors.get(path)
         exp_type = self.get_argument("export")
         out = tempfile.NamedTemporaryFile("w+")
         pywal.export.color(colors, exp_type, out.name)
-
-        self.render("result.html", colors=colors, out=out.read(), out_name=self._get_export_type(exp_type))
+        infile.seek(0)
+        colors["special"].pop("cursor")
+        self.render("result.html", colors=colors, out=out.read(), out_name=self._get_export_type(exp_type),
+                    wallpaper=infile.read())
 
     @staticmethod
     def _get_export_type(export_type):

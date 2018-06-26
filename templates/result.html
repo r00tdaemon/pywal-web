@@ -2,27 +2,69 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pywal-web</title>
+    <link rel="stylesheet" type="text/css" href="{{ static_url('style.css') }}">
     <style>
-        .box {
-            width: 100px;
-            height: 100px;
+        {% from base64 import b64encode %}
+        html {
+            background: url("data:;base64,{{ b64encode(wallpaper) }}") no-repeat center center fixed;
+            background-size: cover;
+              -webkit-background-size: cover;
+              -moz-background-size: cover;
+              -o-background-size: cover;
+            font-family: "DejaVu Sans";
         }
     </style>
 </head>
 <body>
-    {% for i, color in colors["special"].items() %}
-        <div class="box" style="background:{{color}}"></div>
-        <span>{{i}} - {{color}}</span>
-    {% end %}
+    <div id="mySidenav" class="sidenav" style="background-color: {{colors["special"]["background"]}}cc">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <!--<div class="lm_item_container" style="width: 917px; height: 489px; display: block;">-->
+            <!--<div class="lm_content" style="width: 917px; height: 489px;">-->
+        <div class="row">
+            <div class="column">
+            <div class="editor">
+                <div class="palette">
+                {% for i, (label, color) in enumerate(list(colors["special"].items()) + list(colors["colors"].items())) %}
+                    {% if i%2 == 0 %}
+                    <div class="block dark">
+                    {% else %}
+                    <div class="block light">
+                    {% end %}
+                    <div class="color" style="background: {{color}} !important;">
+                        <div class="label">{{label}}</div>
+                        <div class="hex">{{color}}</div>
+                    </div>
+                    </div>
+                {% end %}
+                </div>
+            </div>
+            </div>
+            <div class="column">
+            <div class="export">
+                <textarea style="background: {{colors["special"]["background"]}};
+                    color: {{colors["special"]["foreground"]}};" spellcheck="false"> {{out}} </textarea>
+                <div class="buttons">
+                    <button type="button" class="button button-download" id="btn1">Download</button>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="show-sidenav">
+        <span style="font-size:70px;cursor:pointer;color: {{colors["special"]["foreground"]}}" onclick="openNav()">&#10094;</span>
+    </div>
 
-    {% for i, color in colors["colors"].items() %}
-        <div class="box" style="background:{{color}}"></div>
-        <span>{{i}} - {{color}}</span>
-    {% end %}
-    <textarea> {{out}} </textarea>
-    <button value="Download" id="btn1">Download</button>
     <script>
+        function openNav() {
+            document.getElementById("mySidenav").style.width = "100%";
+        }
+
+        function closeNav() {
+            document.getElementById("mySidenav").style.width = "0";
+        }
+
         var saveData = (function () {
             var a = document.createElement("a");
             document.body.appendChild(a);

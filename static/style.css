@@ -1,0 +1,153 @@
+.box {
+    width: 100px;
+    height: 100px;
+}
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: rgba(29,31,33, 0.9);;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.show-sidenav {
+    position: absolute;
+    right: 25px;
+    color: rgba(45, 45, 45, 0.8);
+}
+
+.row {
+    display: flex;
+}
+
+.column {
+    flex: 50%;
+    padding: 10px;
+}
+
+.editor .palette {
+ display:-webkit-box;
+ display:-ms-flexbox;
+ display:flex;
+ -ms-flex-wrap:wrap;
+ flex-wrap:wrap;
+ -webkit-box-flex:1;
+ -ms-flex:1;
+ flex:1
+}
+
+.editor .palette .block {
+ width:50%
+}
+.editor .palette .block .label {
+ padding-top:20px;
+ line-height:20px;
+ font-size:25px;
+ font-weight:500;
+ text-transform:uppercase
+}
+.editor .palette .block .hex {
+ line-height:40px
+}
+.editor .palette .focus .color,.editor .palette .focus .color:hover {
+ outline:2px solid #fff
+}
+.editor .palette .dark .color {
+ color:rgba(255,255,255,0.5)
+}
+.editor .palette .light .color {
+ color:rgba(0,0,0,0.5)
+}
+.editor .palette .color {
+ cursor:default;
+ margin:5px;
+ background:red;
+ height:80px;
+ text-align:center;
+ box-shadow:0 0 0 1px rgba(0,0,0,0.2),inset 0 -5px rgba(0,0,0,0.2)
+}
+.editor .palette .color:hover {
+ outline:2px solid rgba(255,255,255,0.5)
+}
+
+.import,.export {
+ display:block;
+ /*position:absolute;*/
+ /*top:0;*/
+ /*bottom:0;*/
+ /*left:0;*/
+ /*right:0;*/
+ padding:20px;
+ display:-webkit-box;
+ display:-ms-flexbox;
+ display:flex;
+ -webkit-box-orient:vertical;
+ -webkit-box-direction:normal;
+ -ms-flex-direction:column;
+ flex-direction:column;
+ height: 100%;
+}
+.import .control,.export .control {
+ margin-bottom:20px
+}
+.import select,.export select {
+ width:100%
+}
+.import textarea,.export textarea {
+ -webkit-box-flex:1;
+ -ms-flex:1;
+ flex:1;
+ width:100%;
+ margin:0;
+ padding:10px;
+ resize:none;
+ -moz-tab-size:2;
+ -o-tab-size:2;
+ tab-size:2;
+ outline:0;
+ /*border:2px solid red;*/
+ box-sizing:border-box
+}
+.import .buttons,.export .buttons {
+ display:-webkit-box;
+ display:-ms-flexbox;
+ display:flex;
+ margin-top:20px
+}
+.import .button,.export .button {
+ -webkit-box-flex:1;
+ -ms-flex:1;
+ flex:1;
+ margin-right:20px
+}
