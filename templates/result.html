@@ -18,7 +18,7 @@
     </style>
 </head>
 <body>
-    <div id="mySidenav" class="sidenav" style="background-color: {{colors["special"]["background"]}}cc">
+    <div id="mySidenav" class="sidenav" style="background-color: {{colors["bg"]}}cc">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <!--<div class="lm_item_container" style="width: 917px; height: 489px; display: block;">-->
             <!--<div class="lm_content" style="width: 917px; height: 489px;">-->
@@ -26,8 +26,8 @@
             <div class="column">
             <div class="editor">
                 <div class="palette">
-                {% for i, (label, color) in enumerate(list(colors["special"].items()) + list(colors["colors"].items())) %}
-                    {% if i%2 == 0 %}
+                {% for label, color in list(colors.items()) %}
+                    {% if is_dark(color) %}
                     <div class="block dark">
                     {% else %}
                     <div class="block light">
@@ -43,8 +43,8 @@
             </div>
             <div class="column">
             <div class="export">
-                <textarea style="background: {{colors["special"]["background"]}};
-                    color: {{colors["special"]["foreground"]}};" spellcheck="false"> {{out}} </textarea>
+                <textarea style="background: {{colors["bg"]}};
+                    color: {{colors["fg"]}};" spellcheck="false"> {{out}} </textarea>
                 <div class="buttons">
                     <button type="button" class="button button-download" id="btn1">Download</button>
                 </div>
@@ -53,7 +53,7 @@
         </div>
     </div>
     <div class="show-sidenav">
-        <span style="font-size:70px;cursor:pointer;color: {{colors["special"]["foreground"]}}" onclick="openNav()">&#10094;</span>
+        <span style="font-size:70px;cursor:pointer;color: {{colors["fg"]}}" onclick="openNav()">&#10094;</span>
     </div>
 
     <script>

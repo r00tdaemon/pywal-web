@@ -1,9 +1,12 @@
 import os
 import tempfile
+from collections import OrderedDict
 
 import pywal
 import tornado.ioloop
 import tornado.web
+
+import ui_methods
 
 
 class MainHandler(tornado.web.RequestHandler):
@@ -23,7 +26,21 @@ class UploadHandler(tornado.web.RequestHandler):
         out = tempfile.NamedTemporaryFile("w+")
         pywal.export.color(colors, exp_type, out.name)
         infile.seek(0)
-        colors["special"].pop("cursor")
+
+        order = [
+            ("bg", "background"), ("fg", "foreground"), ("0", "color0"), ("8", "color8"), ("1", "color1"),
+            ("9", "color9"), ("2", "color2"), ("10", "color10"), ("3", "color3"), ("11", "color11"),
+            ("4", "color4"), ("12", "color12"), ("5", "color5"), ("13", "color13"), ("6", "color6"),
+            ("14", "color14"), ("7", "color7"), ("15", "color15")
+        ]
+        flatten_colors = {
+            **colors["special"],
+            **colors["colors"]
+        }
+        colors = OrderedDict()
+        for label, k in order:
+            colors[label] = flatten_colors[k]
+
         self.render("result.html", colors=colors, out=out.read(), out_name=self._get_export_type(exp_type),
                     wallpaper=infile.read())
 
@@ -35,12 +52,10 @@ class UploadHandler(tornado.web.RequestHandler):
             "dwm": "colors-wal-dwm.h",
             "st": "colors-wal-st.h",
             "tabbed": "colors-wal-tabbed.h",
-            "gtk2": "colors-gtk2.rc",
             "json": "colors.json",
             "konsole": "colors-konsole.colorscheme",
             "plain": "colors",
             "putty": "colors-putty.reg",
-            "rofi": "colors-rofi.Xresources",
             "scss": "colors.scss",
             "shell": "colors.sh",
             "sway": "colors-sway",
@@ -58,6 +73,7 @@ def main():
         ],
         template_path=os.path.join(os.path.dirname(__file__), "templates"),
         static_path=os.path.join(os.path.dirname(__file__), "static"),
+        ui_methods=ui_methods,
         debug=True,
     )
     app.listen(os.environ.get("PORT", 8080))

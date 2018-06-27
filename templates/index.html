@@ -13,7 +13,7 @@
     <form enctype="multipart/form-data" action="/upload" method="post">
       <div class="image-upload-wrap">
         <input type="file" name="file1" accept="image/*" required="" onchange="readURL(this);"/>
-        <p>Drag your wallpaper here or click in this area.</p>
+        <div class="photo">Drag your wallpaper here or click in this area.</div>
       </div>
 
         <div class="file-upload-content">
@@ -22,12 +22,10 @@
             <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
           </div>
         </div>
-
-        <br/>
-        <br/>
-        <div class="sel">
+        <p>Export Template:</p>
+        <div class="select">
          <select name="export">
-            {% for option in ["css", "dwm", "st", "tabbed", "gtk2", "json", "konsole", "plain", "putty", "rofi", "scss",
+            {% for option in ["css", "dwm", "st", "tabbed", "json", "konsole", "plain", "putty", "scss",
             "shell", "sway", "tty", "xresources", "yaml"] %}
               <option value="{{option}}">{{option}}</option>
             {%end%}
