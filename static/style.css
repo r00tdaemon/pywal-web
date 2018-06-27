@@ -13,6 +13,7 @@
     overflow-x: hidden;
     transition: 0.5s;
     padding-top: 60px;
+    box-sizing:border-box;
 }
 
 .sidenav a {
