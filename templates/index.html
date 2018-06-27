@@ -2,21 +2,74 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="{{ static_url('index.css') }}">
+    <script src="{{ static_url('jquery.min.js') }}"></script>
     <title>Pywal-web</title>
 </head>
 <body>
-<p>
-<h1>Tornado Upload App</h1></p>
-<form enctype="multipart/form-data" action="/upload" method="post">
-    File: <input type="file" name="file1"/>
-    <br/>
-    <br/>
-     <select name="export">
-        {% for option in ["css", "dwm", "st", "tabbed", "gtk2", "json", "konsole", "plain", "putty", "rofi", "scss",
-        "shell", "sway", "tty", "xresources", "yaml"] %}
-          <option value="{{option}}">{{option}}</option>
-        {%end%}
-    </select>
-    <input type="submit" value="upload"/>
-</form>
+<h1>Web Pywal</h1>
+<div class="container">
+    <form enctype="multipart/form-data" action="/upload" method="post">
+      <div class="image-upload-wrap">
+        <input type="file" name="file1" accept="image/*" required="" onchange="readURL(this);"/>
+        <p>Drag your wallpaper here or click in this area.</p>
+      </div>
+
+        <div class="file-upload-content">
+          <img class="file-upload-image" src="#" alt="your image" />
+          <div class="image-title-wrap">
+            <button type="button" onclick="removeUpload()" class="remove-image">Remove <span class="image-title">Uploaded Image</span></button>
+          </div>
+        </div>
+
+        <br/>
+        <br/>
+        <div class="sel">
+         <select name="export">
+            {% for option in ["css", "dwm", "st", "tabbed", "gtk2", "json", "konsole", "plain", "putty", "rofi", "scss",
+            "shell", "sway", "tty", "xresources", "yaml"] %}
+              <option value="{{option}}">{{option}}</option>
+            {%end%}
+        </select>
+        </div>
+        <button type="submit">Upload</button>
+    </form>
+</div>
+
+<script>
+    function readURL(input) {
+      if (input.files && input.files[0]) {
+
+        var reader = new FileReader();
+
+        reader.onload = function(e) {
+          $('.image-upload-wrap').hide();
+
+          $('.file-upload-image').attr('src', e.target.result);
+          $('.file-upload-content').show();
+
+          $('.image-title').html(input.files[0].name);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+
+      } else {
+        removeUpload();
+      }
+    }
+
+    function removeUpload() {
+      $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+      $('.file-upload-content').hide();
+      $('.image-upload-wrap').show();
+    }
+    $('.image-upload-wrap').bind('dragover', function () {
+            $('.image-upload-wrap').addClass('image-dropping');
+        });
+        $('.image-upload-wrap').bind('dragleave', function () {
+            $('.image-upload-wrap').removeClass('image-dropping');
+    });
+
+</script>
 </body>
