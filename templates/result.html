@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pywal-web</title>
-    <link rel="stylesheet" type="text/css" href="{{ static_url('style.css') }}">
+    <link href="{{ static_url('jquery.terminal.min.css') }}" rel="stylesheet"/>
+    <link href="{{ static_url('term.css') }}" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{{ static_url('result.css') }}">
     <style>
         {% from base64 import b64encode %}
         html {
@@ -15,13 +17,14 @@
               -o-background-size: cover;
             font-family: "DejaVu Sans";
         }
+        .cursor-line{
+            background: {{colors["bg"]}}cc;
+        }
     </style>
 </head>
 <body>
     <div id="mySidenav" class="sidenav" style="background-color: {{colors["bg"]}}cc">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <!--<div class="lm_item_container" style="width: 917px; height: 489px; display: block;">-->
-            <!--<div class="lm_content" style="width: 917px; height: 489px;">-->
         <div class="row">
             <div class="column">
             <div class="editor">
@@ -55,7 +58,19 @@
     <div class="show-sidenav">
         <span style="font-size:70px;cursor:pointer;color: {{colors["fg"]}}" onclick="openNav()">&#10094;</span>
     </div>
+    <div id="window" style="background: {{colors["bg"]}}cc; border: 2px solid {{colors["fg"]}};">
+        <div class="terminal" id="terminal" style="height: 620px;">
 
+        </div>
+    </div>
+
+    <script src="{{ static_url('jquery.min.js') }}"></script>
+    <script src="{{ static_url('jquery.terminal.min.js') }}"></script>
+    <script src="{{ static_url('result.js') }}"></script>
+    <script type="application/javascript">
+        {% import json %}
+        set_prompt_color({% raw json.dumps(colors) %});
+    </script>
     <script>
         function openNav() {
             document.getElementById("mySidenav").style.width = "100%";
@@ -65,6 +80,7 @@
             document.getElementById("mySidenav").style.width = "0";
         }
 
+        // Save color palette
         var saveData = (function () {
             var a = document.createElement("a");
             document.body.appendChild(a);

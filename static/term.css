@@ -1,0 +1,17 @@
+#window{
+    margin-left: auto;
+    margin-right: auto;
+    height: 620px;
+    margin-bottom:40px;
+    margin-top:40px;
+    max-width: 900px;
+    overflow: hidden;
+    width: 90%;
+    position: fixed;
+    top: 5%;
+    left: 5%;
+}
+
+#window #terminal {
+    background-color: transparent;
+}
