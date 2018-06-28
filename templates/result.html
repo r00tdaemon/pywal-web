@@ -17,9 +17,24 @@
               -o-background-size: cover;
             font-family: "DejaVu Sans";
         }
-        .cursor-line{
-            background: {{colors["bg"]}}cc;
+
+        .cmd, .cmd .prompt, .terminal, .terminal .terminal-output > div > div {
+            color: {{colors["fg"]}};
+            background: border-box;
         }
+        @supports (--css:variables) {
+            @keyframes terminal-blink {
+                0%, to {
+                    background-color: var(--background, border-box);
+                    /*color: var(--color, #c82333)*/
+                }
+                50% {
+                    background-color: var(--color, {{colors["fg"]}});
+                    /*color: var(--background, #ffc107)*/
+                }
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -70,6 +85,7 @@
     <script type="application/javascript">
         {% import json %}
         set_prompt_color({% raw json.dumps(colors) %});
+        set_palette({% raw json.dumps(colors) %});
     </script>
     <script>
         function openNav() {
