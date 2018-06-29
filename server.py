@@ -21,7 +21,9 @@ class UploadHandler(tornado.web.RequestHandler):
         infile.write(file1['body'])
 
         path = pywal.image.get(infile.name)
-        colors = pywal.colors.get(path)
+        backend = self.get_argument("backend")
+        light = True if self.get_argument("light") == "True" else False
+        colors = pywal.colors.get(path, light=light, backend=backend)
         exp_type = self.get_argument("export")
         out = tempfile.NamedTemporaryFile("w+")
         pywal.export.color(colors, exp_type, out.name)
